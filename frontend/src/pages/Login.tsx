@@ -14,7 +14,7 @@ export default function Login({onLogin}: LoginProps) {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:5000/auth/login', {
+      const res = await axios.post('https://study-planner-backend-xjed.onrender.com/auth/login', {
         email,
         password
       }, { withCredentials: true });

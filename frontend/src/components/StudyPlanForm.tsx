@@ -15,7 +15,7 @@ type StudyPlanFormProps = {
         e.preventDefault();
         try {
             const taskObjs = tasks.map((t) => ({name: t, done: false}));
-            await axios.post('http://localhost:5000/study/create', {
+            await axios.post('https://study-planner-backend-xjed.onrender.com/study/create', {
                 title,
                 subject,
                 deadline,

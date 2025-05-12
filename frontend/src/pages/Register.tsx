@@ -19,7 +19,7 @@ export default function Register({ onLogin }: RegisterProps) {
     e.preventDefault();
     try {
     console.log("Test");
-      const res = await axios.post('http://localhost:5000/auth/register', {
+      const res = await axios.post('https://study-planner-backend-xjed.onrender.com/auth/register', {
         email,
         username,
         password

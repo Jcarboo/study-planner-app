@@ -80,10 +80,10 @@ Must use MongoDB
 
 ## Describe what Python package or API you will use and how it will affect the user experience:
 
-This project integrates `Flask-Mail` as a third-party Python package to enhance the user experience by sending email notifications. Specifically:
+This project uses `Flask-Mail` as a third-party Python package to enhance the user experience by sending email notifications. Specifically:
 
 - When a user registers, they receive a welcome email.
 - When a user deletes their account, they receive a confirmation email.
 
-These notifications improve transparency and professionalism while giving users assurance that their actions have been acknowledged and processed. `Flask-Mail` is configured using Gmail SMTP and securely managed via environment variables for `MAIL_USERNAME` and `MAIL_PASSWORD`.
+These notifications improve transparency and professionalism between the host and the user, while giving users extra assurance that their actions have been acknowledged and processed. `Flask-Mail` is configured using Gmail SMTP and securely managed via environment variables.
 

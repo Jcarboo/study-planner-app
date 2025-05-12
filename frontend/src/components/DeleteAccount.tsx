@@ -13,7 +13,7 @@ export default function DeleteAccount() {
     if (!confirm2) return;
 
     try {
-      await axios.post("http://localhost:5000/auth/delete-account", {}, { withCredentials: true });
+      await axios.post("https://study-planner-backend-xjed.onrender.com/auth/delete-account", {}, { withCredentials: true });
       navigate('/');
     } catch (err) {
       console.error("Account deletion failed", err);

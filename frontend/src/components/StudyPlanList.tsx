@@ -24,7 +24,7 @@ type StudyPlanListProps = {
     // Function to get all plans
     const fetchPlans = async () => {
     try {
-        const res = await axios.get("http://localhost:5000/study/all", {
+        const res = await axios.get("https://study-planner-backend-xjed.onrender.com/study/all", {
         withCredentials: true,
         });
         setPlans(res.data);
@@ -39,7 +39,7 @@ type StudyPlanListProps = {
     // Functions to delete and add task
     const deleteTask = async (planId: string, taskName: string) => {
     try {
-        await axios.post(`http://localhost:5000/study/${planId}/delete-task`, {
+        await axios.post(`https://study-planner-backend-xjed.onrender.com/study/${planId}/delete-task`, {
         task_name: taskName
         }, { withCredentials: true });
         // Refresh UI after deletion
@@ -52,7 +52,7 @@ type StudyPlanListProps = {
 
     const addTask = async (planId: string) => {
     try {
-        await axios.post(`http://localhost:5000/study/${planId}/add-task`, {
+        await axios.post(`https://study-planner-backend-xjed.onrender.com/study/${planId}/add-task`, {
         task_name: newTask
         }, { withCredentials: true });
         setNewTask("");
@@ -65,7 +65,7 @@ type StudyPlanListProps = {
     // Task done function
     const toggleTaskDone = async (planId: string, taskName: string, currentDone: boolean) => {
     try {
-        await axios.post(`http://localhost:5000/study/${planId}/toggle-task`, {
+        await axios.post(`https://study-planner-backend-xjed.onrender.com/study/${planId}/toggle-task`, {
         task_name: taskName,
         done: !currentDone
         }, { withCredentials: true });
@@ -81,7 +81,7 @@ type StudyPlanListProps = {
     if (!confirmDelete) return;
 
     try {
-        await axios.delete(`http://localhost:5000/study/${planId}`, {
+        await axios.delete(`https://study-planner-backend-xjed.onrender.com/study/${planId}`, {
         withCredentials: true
         });
         fetchPlans(); // Refresh UI
