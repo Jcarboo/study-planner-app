@@ -2,12 +2,16 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-export default function Login({onLogin}) {
+type LoginProps = {
+  onLogin: () => void;
+};
+
+export default function Login({onLogin}: LoginProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const res = await axios.post('http://localhost:5000/auth/login', {
@@ -18,7 +22,7 @@ export default function Login({onLogin}) {
       console.log("Login successful:", res.data);
       navigate('/dashboard');
     } catch (err) {
-      console.error("Login failed:", err.response?.data || err.message);
+      console.error("Login failed:", err);
     }
   };
 
@@ -26,8 +30,8 @@ export default function Login({onLogin}) {
     <div>
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
-        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required />
+        <input type="email" value={email} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)} placeholder="Email" required />
+        <input type="password" value={password} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)} placeholder="Password" required />
         <button type="submit">Login</button>
       </form>
       <p>Don't have an account? <a href="/register">Register here</a></p>

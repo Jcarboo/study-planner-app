@@ -2,7 +2,12 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-export default function Navbar({ isLoggedIn, onLogout }) {
+type NavbarProps = {
+  isLoggedIn: boolean;
+  onLogout: () => void;
+};
+
+export default function Navbar({ isLoggedIn, onLogout }: NavbarProps) {
   const navigate = useNavigate();
 
   const handleLogout = async () => {

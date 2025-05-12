@@ -29,7 +29,7 @@ function App() {
       <Navbar isLoggedIn={isLoggedIn} onLogout={() => setIsLoggedIn(false)} />
       <Routes>
         <Route path="/" element={<Login onLogin={() => setIsLoggedIn(true)} />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/register" element={<Register onLogin={() => setIsLoggedIn(true)} />} />
         <Route 
           path="/dashboard" 
           element={

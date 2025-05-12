@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
 import axios from 'axios'; 
 
-export default function StudyPlanForm({onPlanCreated}) {
-    // Form parameters
-    const [title, setTitle] = useState('');
-    const [subject, setSubject] = useState('');
-    const [deadline, setDeadline] = useState('');
-    const [tasks, setTasks] = useState([]);
+type StudyPlanFormProps = {
+    onPlanCreated: () => void;
+  };
 
-    const handleSubmit = async (e) => {
+  export default function StudyPlanForm({ onPlanCreated }: StudyPlanFormProps) {
+    const [title, setTitle] = useState<string>('');
+    const [subject, setSubject] = useState<string>('');
+    const [deadline, setDeadline] = useState<string>('');
+    const [tasks, setTasks] = useState<string[]>([]);
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
             const taskObjs = tasks.map((t) => ({name: t, done: false}));
-            await axios.post('http://localhost:5000/api/study-plans', {
+            await axios.post('http://localhost:5000/study/create', {
                 title,
                 subject,
                 deadline,
@@ -32,12 +35,13 @@ export default function StudyPlanForm({onPlanCreated}) {
     return (
         <form onSubmit={handleSubmit}>
             <h2>Create a study plan</h2>
-            <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder='Title' required />
-            <input value={subject} onChange={(e) => setTitle(e.target.value)} placeholder='Subject' required />
-            <input type='date' value={deadline} onchange={(e) => setDeadline(e.targete.value)} required />
+            <input value={title} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)} placeholder='Title' required />
+            <input value={subject} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSubject(e.target.value)} placeholder='Subject' required />
+            <input type="date" value={deadline} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDeadline(e.target.value)} required />
+
 
             {tasks.map((task, i) => (
-                <input key={i} value={task} onChange={(e) => {
+                <input key={i} value={task} onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
 
                     const copy = [...tasks];
                     copy[i] = e.target.value;
