@@ -1,0 +1,30 @@
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
+export default function Navbar({ isLoggedIn, onLogout }) {
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await axios.post('http://localhost:5000/auth/logout', {}, { withCredentials: true });
+      onLogout(); // update state
+      navigate('/');
+    } catch (err) {
+      console.error("Logout failed:", err);
+    }
+  };
+
+  return (
+    <nav style={{ padding: '10px', backgroundColor: '#f0f0f0' }}>
+      <Link to="/dashboard">Dashboard</Link> |{" "}
+      {isLoggedIn ? (
+        <button onClick={handleLogout}>Logout</button>
+      ) : (
+        <>
+          <Link to="/">Login</Link> | <Link to="/register">Register</Link>
+        </>
+      )}
+    </nav>
+  );
+}
