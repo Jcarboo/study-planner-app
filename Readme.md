@@ -2,6 +2,8 @@
 
 This project is a full-stack Study Planner web application built with a Flask backend and React frontend. It allows users to register and log in, create detailed study plans with customizable tasks, and track their academic progress. All core functionality is protected behind authentication and synced with a MongoDB database. Users can add, edit, delete, and toggle task completion, as well as delete their accounts. It provides a streamlined way for students to organize their study routines while securely managing their data.
 
+site: https://plan2win.vercel.app
+
 ---
 
 ## Registration and Login:
