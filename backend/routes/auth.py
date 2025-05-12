@@ -1,10 +1,11 @@
 from flask import Blueprint, request, jsonify, make_response
 from flask_login import login_user, logout_user, login_required, current_user
-from extensions import mongo
+from extensions import mongo, mail
 from models.user import User
 from utils.security import hash_password, check_password
 from flask_cors import cross_origin
 from bson.objectid import ObjectId
+from flask_mail import Message
 
 auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -38,6 +39,12 @@ def register():
     user_doc = mongo.db.users.find_one({'email': data['email']})
     user = User(user_doc)
     login_user(user)
+    msg = Message(
+        subject="Welcome to Study Planner!",
+        recipients=[data['email']],
+        body=f"Hi {data['username']}, thanks for signing up for Plan2Win! Read up on how to use the app on the about page of the wesbite! Happy planning!"
+    )
+    mail.send(msg)
 
     return jsonify({'message': 'User created', 'user_id': str(result.inserted_id)}), 201
 
