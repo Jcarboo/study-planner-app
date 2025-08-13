@@ -27,14 +27,13 @@ def create_app():
         MAIL_DEFAULT_SENDER=os.environ.get('MAIL_USERNAME')
     )
 
-    # ✅ CORS must allow your FE origin + credentials
     CORS(
         app,
         supports_credentials=True,
         origins=[
             os.environ.get("FRONTEND_URL", "https://plan2win.vercel.app"),
-            "http://localhost:3000",                # keep for local dev
-            "https://*.vercel.app",                 # optional: preview deploys
+            "http://localhost:3000",                
+            "https://*.vercel.app",                 
         ],
         allow_headers=["Content-Type"],
         expose_headers=["Set-Cookie"],
