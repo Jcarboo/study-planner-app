@@ -52,7 +52,7 @@ export default function AiTools() {
   const loadNotes = async () => {
     setLoadingNotes(true);
     try {
-      const res = await axios.get<NoteMeta[]>('http://study-planner-backend-xjed.onrender.com/ai/notes', { withCredentials: true });
+      const res = await axios.get<NoteMeta[]>('https://study-planner-backend-xjed.onrender.com/ai/notes', { withCredentials: true });
       setNotes(res.data);
       // Preserve selection if still exists, else select latest if any
       if (res.data.length) {
@@ -82,7 +82,7 @@ export default function AiTools() {
       const form = new FormData();
       form.append('note', e.target.files[0]);
       if (uploadTitle.trim()) form.append('title', uploadTitle.trim());
-      await axios.post('http://study-planner-backend-xjed.onrender.com/ai/notes/upload', form, { withCredentials: true });
+      await axios.post('https://study-planner-backend-xjed.onrender.com/ai/notes/upload', form, { withCredentials: true });
       setUploadTitle('');
       await loadNotes();
       alert('Notes uploaded!');
@@ -103,7 +103,7 @@ export default function AiTools() {
     }
     setUploading(true);
     try {
-      await axios.post('http://study-planner-backend-xjed.onrender.com/ai/notes/upload', {
+      await axios.post('https://study-planner-backend-xjed.onrender.com/ai/notes/upload', {
         text: uploadText, title: uploadTitle || undefined
       }, { withCredentials: true });
       setUploadText('');
@@ -121,7 +121,7 @@ export default function AiTools() {
   const deleteNote = async (id: string) => {
     if (!window.confirm('Delete this note?')) return;
     try {
-      await axios.delete(`http://study-planner-backend-xjed.onrender.com/ai/notes/${id}`, { withCredentials: true });
+      await axios.delete(`https://study-planner-backend-xjed.onrender.com/ai/notes/${id}`, { withCredentials: true });
       await loadNotes();
     } catch (e) {
       console.error(e);
@@ -133,7 +133,7 @@ export default function AiTools() {
     setSumLoading(true);
     setSummary(null);
     try {
-      const res = await axios.post('http://study-planner-backend-xjed.onrender.com/ai/notes/summarize', {
+      const res = await axios.post('https://study-planner-backend-xjed.onrender.com/ai/notes/summarize', {
         noteId: selectedNoteId || undefined
       }, { withCredentials: true });
       setSummary(res.data);
@@ -150,7 +150,7 @@ export default function AiTools() {
     setExpLoading(true);
     setExplain(null);
     try {
-      const res = await axios.post('http://study-planner-backend-xjed.onrender.com/ai/notes/explain', {
+      const res = await axios.post('https://study-planner-backend-xjed.onrender.com/ai/notes/explain', {
         topic, noteId: selectedNoteId || undefined
       }, { withCredentials: true });
       setExplain(res.data);
@@ -169,7 +169,7 @@ export default function AiTools() {
     setGradeResult(null);
     setAnswers([]);
     try {
-      const res = await axios.post('http://study-planner-backend-xjed.onrender.com/ai/quiz/generate', {
+      const res = await axios.post('https://study-planner-backend-xjed.onrender.com/ai/quiz/generate', {
         numMCQ, numFR, difficulty, noteId: selectedNoteId || undefined
       }, { withCredentials: true });
       setQuiz({ quizId: res.data.quizId, questions: res.data.questions });
@@ -187,7 +187,7 @@ export default function AiTools() {
     setGrading(true);
     setGradeResult(null);
     try {
-      const res = await axios.post('http://study-planner-backend-xjed.onrender.com/ai/quiz/grade', {
+      const res = await axios.post('https://study-planner-backend-xjed.onrender.com/ai/quiz/grade', {
         quizId: quiz.quizId, answers
       }, { withCredentials: true });
       setGradeResult(res.data);

@@ -38,25 +38,25 @@ export default function ProfileView() {
       try {
         // Try the new public endpoint first
         const userReq = axios.get<PublicUser>(
-          `http://study-planner-backend-xjed.onrender.com/profile/${userId}/public`,
+          `https://study-planner-backend-xjed.onrender.com/profile/${userId}/public`,
           { withCredentials: true }
         ).catch(async (e) => {
           // Fallback to old endpoint so page still works
           console.warn('Public profile route failed, falling back:', e?.response?.status, e?.response?.data);
           const fallback = await axios.get<PublicUser>(
-            `http://study-planner-backend-xjed.onrender.com/search/user/${userId}`,
+            `https://study-planner-backend-xjed.onrender.com/search/user/${userId}`,
             { withCredentials: true }
           );
           return { data: fallback.data } as any;
         });
 
         const meReq = axios.get<{ username: string; email: string; courses: string[] }>(
-          'http://study-planner-backend-xjed.onrender.com/profile',
+          'https://study-planner-backend-xjed.onrender.com/profile',
           { withCredentials: true }
         );
 
         const featuredReq = axios.get<FeaturedPlan[]>(
-          `http://study-planner-backend-xjed.onrender.com/profile/${userId}/featured-plans`,
+          `https://study-planner-backend-xjed.onrender.com/profile/${userId}/featured-plans`,
           { withCredentials: true }
         ).catch((e) => {
           console.warn('featured-plans failed:', e?.response?.status, e?.response?.data);
@@ -128,7 +128,7 @@ export default function ProfileView() {
                   {/* Header */}
                   <div className="flex items-center gap-5">
                     <img
-                      src={`http://study-planner-backend-xjed.onrender.com/profile/photo/${userId}`}
+                      src={`https://study-planner-backend-xjed.onrender.com/profile/photo/${userId}`}
                       onError={(e: any) => {
                         e.currentTarget.src = 'https://via.placeholder.com/128x128.png?text=No+Photo';
                       }}

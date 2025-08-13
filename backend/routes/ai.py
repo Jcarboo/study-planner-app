@@ -39,7 +39,7 @@ def _parse_json_block(text: str):
     return None
 
 @ai_bp.route("/breakdown", methods=["POST"])
-@cross_origin(origins='http://plan2win.vercel.app', supports_credentials=True)
+@cross_origin(origins='https://plan2win.vercel.app', supports_credentials=True)
 @login_required
 def breakdown():
     data = request.get_json(force=True) or {}
@@ -122,7 +122,7 @@ def _json_from_text(text: str):
     return None
 
 @ai_bp.route("/tips", methods=["GET"])
-@cross_origin(origins="http://plan2win.vercel.app", supports_credentials=True)
+@cross_origin(origins="https://plan2win.vercel.app", supports_credentials=True)
 @login_required
 def ai_study_tips():
     api_key = os.getenv("GEMINI_API_KEY")
@@ -270,7 +270,7 @@ def _get_note_text_by_id(user_id: str, note_id: str) -> Optional[str]:
         return None
 
 @ai_bp.route("/notes", methods=["GET"])
-@cross_origin(origins="http://plan2win.vercel.app", supports_credentials=True)
+@cross_origin(origins="https://plan2win.vercel.app", supports_credentials=True)
 @login_required
 def list_notes():
     user_id = str(current_user.id)
@@ -287,7 +287,7 @@ def list_notes():
     return jsonify(notes)
 
 @ai_bp.route("/notes/upload", methods=["POST"])
-@cross_origin(origins="http://plan2win.vercel.app", supports_credentials=True)
+@cross_origin(origins="https://plan2win.vercel.app", supports_credentials=True)
 @login_required
 def upload_notes():
     user_id = str(current_user.id)
@@ -325,7 +325,7 @@ def upload_notes():
     return jsonify({"message": "Notes uploaded", "noteId": str(inserted.inserted_id)}), 201
 
 @ai_bp.route("/notes/<note_id>", methods=["DELETE"])
-@cross_origin(origins="http://plan2win.vercel.app", supports_credentials=True)
+@cross_origin(origins="https://plan2win.vercel.app", supports_credentials=True)
 @login_required
 def delete_note(note_id):
     user_id = str(current_user.id)
@@ -338,7 +338,7 @@ def delete_note(note_id):
         return jsonify({"error": "Invalid note id"}), 400
 
 @ai_bp.route("/notes/summarize", methods=["POST"])
-@cross_origin(origins="http://plan2win.vercel.app", supports_credentials=True)
+@cross_origin(origins="https://plan2win.vercel.app", supports_credentials=True)
 @login_required
 def summarize_notes():
     body = request.get_json() or {}
@@ -369,7 +369,7 @@ Notes:
     return jsonify(data)
 
 @ai_bp.route("/notes/explain", methods=["POST"])
-@cross_origin(origins="http://plan2win.vercel.app", supports_credentials=True)
+@cross_origin(origins="https://plan2win.vercel.app", supports_credentials=True)
 @login_required
 def explain_concept():
     body = request.get_json() or {}
@@ -395,7 +395,7 @@ Notes:
     return jsonify(data)
 
 @ai_bp.route("/quiz/generate", methods=["POST"])
-@cross_origin(origins="http://plan2win.vercel.app", supports_credentials=True)
+@cross_origin(origins="https://plan2win.vercel.app", supports_credentials=True)
 @login_required
 def quiz_generate():
     body = request.get_json() or {}
@@ -448,7 +448,7 @@ Notes:
     return jsonify({"quizId": str(inserted.inserted_id), "questions": parsed["questions"]})
 
 @ai_bp.route("/quiz/grade", methods=["POST"])
-@cross_origin(origins="http://plan2win.vercel.app", supports_credentials=True)
+@cross_origin(origins="https://plan2win.vercel.app", supports_credentials=True)
 @login_required
 def quiz_grade():
     body = request.get_json() or {}

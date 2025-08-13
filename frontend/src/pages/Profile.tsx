@@ -13,7 +13,7 @@ export default function Profile() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const fetchProfile = () => {
-    axios.get('http://study-planner-backend-xjed.onrender.com/profile', { withCredentials: true })
+    axios.get('https://study-planner-backend-xjed.onrender.com/profile', { withCredentials: true })
       .then(res => {
         setUsername(res.data.username);
         setEmail(res.data.email);
@@ -23,7 +23,7 @@ export default function Profile() {
   };
 
   const fetchPhoto = () => {
-    axios.get('http://study-planner-backend-xjed.onrender.com/profile/photo', {
+    axios.get('https://study-planner-backend-xjed.onrender.com/profile/photo', {
       withCredentials: true,
       responseType: 'blob'
     })
@@ -52,20 +52,20 @@ export default function Profile() {
     const updated = [...courses, c.trim().toUpperCase()];
     setCourses(updated);
     setNewCourse('');
-    axios.post('http://study-planner-backend-xjed.onrender.com/profile/courses', { courses: updated }, { withCredentials: true });
+    axios.post('https://study-planner-backend-xjed.onrender.com/profile/courses', { courses: updated }, { withCredentials: true });
   };
 
   const removeCourse = (courseToRemove: string) => {
     const updated = courses.filter(course => course !== courseToRemove);
     setCourses(updated);
-    axios.post('http://study-planner-backend-xjed.onrender.com/profile/courses', { courses: updated }, { withCredentials: true });
+    axios.post('https://study-planner-backend-xjed.onrender.com/profile/courses', { courses: updated }, { withCredentials: true });
   };
 
   const handleUpload = () => {
     if (!selectedFile) return;
     const formData = new FormData();
     formData.append('photo', selectedFile);
-    axios.post('http://study-planner-backend-xjed.onrender.com/profile/upload-photo', formData, {
+    axios.post('https://study-planner-backend-xjed.onrender.com/profile/upload-photo', formData, {
       withCredentials: true,
       headers: { 'Content-Type': 'multipart/form-data' }
     }).then(() => {

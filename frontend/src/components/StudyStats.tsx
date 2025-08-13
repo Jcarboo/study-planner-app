@@ -36,13 +36,13 @@ export default function StudyStats() {
   useEffect(() => {
     // Line chart streak data
     axios
-      .get('http://study-planner-backend-xjed.onrender.com/study/task-completions/daily', { withCredentials: true })
+      .get('https://study-planner-backend-xjed.onrender.com/study/task-completions/daily', { withCredentials: true })
       .then((res) => setStreakChart(res.data))
       .catch(() => {});
 
     // Subject completion stats
     axios
-      .get<StudyPlan[]>('http://study-planner-backend-xjed.onrender.com/study/all', { withCredentials: true })
+      .get<StudyPlan[]>('https://study-planner-backend-xjed.onrender.com/study/all', { withCredentials: true })
       .then((res) => {
         const plans = res.data;
         const subjectMap: Record<string, { total: number; completed: number }> = {};
@@ -76,7 +76,7 @@ export default function StudyStats() {
 
     // Summary streak/top-subject data
     axios
-      .get('http://study-planner-backend-xjed.onrender.com/study/stats/summary', { withCredentials: true })
+      .get('https://study-planner-backend-xjed.onrender.com/study/stats/summary', { withCredentials: true })
       .then((res) => setSummary(res.data))
       .catch(() => {});
   }, []);

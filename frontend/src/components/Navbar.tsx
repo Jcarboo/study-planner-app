@@ -13,7 +13,7 @@ export default function Navbar({ isLoggedIn, onLogout }: NavbarProps) {
 
   const handleLogout = async () => {
     try {
-      await axios.post('http://study-planner-backend-xjed.onrender.com/auth/logout', {}, { withCredentials: true });
+      await axios.post('https://study-planner-backend-xjed.onrender.com/auth/logout', {}, { withCredentials: true });
       onLogout();
       navigate('/');
     } catch (err) {

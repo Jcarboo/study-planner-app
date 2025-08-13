@@ -26,7 +26,7 @@ def create_app():
     mail.init_app(app)
 
     # Init extensions
-    CORS(app, supports_credentials=True, origins=['http://plan2win.vercel.app'], allow_headers=["Content-Type"])
+    CORS(app, supports_credentials=True, origins=['https://plan2win.vercel.app'], allow_headers=["Content-Type"])
     mongo.init_app(app)
     login_manager.init_app(app)
     bcrypt.init_app(app)

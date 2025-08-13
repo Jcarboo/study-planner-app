@@ -8,7 +8,7 @@ search_bp = Blueprint('search', __name__, url_prefix='/search')
 
 @search_bp.route('/users', methods=['GET'])
 @login_required
-@cross_origin(origins='http://plan2win.vercel.app', supports_credentials=True)
+@cross_origin(origins='https://plan2win.vercel.app', supports_credentials=True)
 def search_users():
     query = request.args.get('q', '').strip()
     if not query:
@@ -25,7 +25,7 @@ def search_users():
 
 @search_bp.route('/courses', methods=['GET'])
 @login_required
-@cross_origin(origins='http://plan2win.vercel.app', supports_credentials=True)
+@cross_origin(origins='https://plan2win.vercel.app', supports_credentials=True)
 def search_courses():
     query = request.args.get('q', '').strip()
     if not query:
@@ -42,7 +42,7 @@ def search_courses():
 
 @search_bp.route('/course-members/<course>', methods=['GET'])
 @login_required
-@cross_origin(origins='http://plan2win.vercel.app', supports_credentials=True)
+@cross_origin(origins='https://plan2win.vercel.app', supports_credentials=True)
 def get_course_members(course):
     results = mongo.db.users.find(
         { 'courses': course },
@@ -55,7 +55,7 @@ def get_course_members(course):
 
 @search_bp.route('/user/<user_id>', methods=['GET'])
 @login_required
-@cross_origin(origins='http://plan2win.vercel.app', supports_credentials=True)
+@cross_origin(origins='https://plan2win.vercel.app', supports_credentials=True)
 def get_user_profile(user_id):
     user_doc = mongo.db.users.find_one(
         { "_id": ObjectId(user_id) },

@@ -32,8 +32,8 @@ export default function SearchResults() {
 
     const url =
       searchType === 'users'
-        ? `http://study-planner-backend-xjed.onrender.com/search/users?q=${encodeURIComponent(searchQuery)}`
-        : `http://study-planner-backend-xjed.onrender.com/search/courses?q=${encodeURIComponent(searchQuery)}`;
+        ? `https://study-planner-backend-xjed.onrender.com/search/users?q=${encodeURIComponent(searchQuery)}`
+        : `https://study-planner-backend-xjed.onrender.com/search/courses?q=${encodeURIComponent(searchQuery)}`;
 
     axios
       .get(url, { withCredentials: true })
@@ -65,7 +65,7 @@ export default function SearchResults() {
     setSelectedCourse(course);
     setMembers([]);
     axios
-      .get(`http://study-planner-backend-xjed.onrender.com/search/course-members/${encodeURIComponent(course)}`, {
+      .get(`https://study-planner-backend-xjed.onrender.com/search/course-members/${encodeURIComponent(course)}`, {
         withCredentials: true,
       })
       .then((res) => {
@@ -140,7 +140,7 @@ export default function SearchResults() {
                     <div className="flex items-center gap-4">
                       <div className="relative">
                         <img
-                          src={`http://study-planner-backend-xjed.onrender.com/profile/photo/${user.user_id}`}
+                          src={`https://study-planner-backend-xjed.onrender.com/profile/photo/${user.user_id}`}
                           alt={`${user.username}'s profile`}
                           onError={(e: any) => {
                             e.currentTarget.src =
@@ -222,7 +222,7 @@ export default function SearchResults() {
                           className="group rounded-xl border border-indigo-500/40 bg-black/40 p-4 hover:border-pink-500/60 hover:shadow-[0_0_20px_rgba(255,20,147,0.25)] transition-all"
                         >
                           <img
-                            src={`http://study-planner-backend-xjed.onrender.com/profile/photo/${m.user_id}`}
+                            src={`https://study-planner-backend-xjed.onrender.com/profile/photo/${m.user_id}`}
                             alt={`${m.username}'s profile`}
                             onError={(e: any) => {
                               e.currentTarget.src =

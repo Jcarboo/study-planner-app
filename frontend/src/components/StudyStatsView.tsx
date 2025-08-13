@@ -37,7 +37,7 @@ export default function StudyStatsView({ userId }: Props) {
       try {
         // 1) Subject % rings (public-safe)
         const subjRes = await axios.get<Array<{subject: string; total: number; completed: number; percent: number}>>(
-          `http://study-planner-backend-xjed.onrender.com/study/user/${userId}/subject-stats`,
+          `https://study-planner-backend-xjed.onrender.com/study/user/${userId}/subject-stats`,
           { withCredentials: true }
         );
         if (!mounted) return;
@@ -50,7 +50,7 @@ export default function StudyStatsView({ userId }: Props) {
 
         // 2) Summary (public-safe)
         const sumRes = await axios.get<{ longestStreak: number; weeklyCount?: number; topSubject: string | null }>(
-          `http://study-planner-backend-xjed.onrender.com/study/user/${userId}/stats/summary`,
+          `https://study-planner-backend-xjed.onrender.com/study/user/${userId}/stats/summary`,
           { withCredentials: true }
         );
         if (!mounted) return;
@@ -61,7 +61,7 @@ export default function StudyStatsView({ userId }: Props) {
 
         // 3) Streak chart (public-safe)
         const streakRes = await axios.get<StreakPoint[]>(
-          `http://study-planner-backend-xjed.onrender.com/study/user/${userId}/task-completions/daily`,
+          `https://study-planner-backend-xjed.onrender.com/study/user/${userId}/task-completions/daily`,
           { withCredentials: true }
         );
         if (!mounted) return;
