@@ -4,6 +4,10 @@ from config import Config
 from extensions import mongo, login_manager, bcrypt, mail
 from routes.study import study_bp
 from routes.auth import auth_bp
+from routes.profile import profile_bp
+from routes.search import search_bp
+from routes.ai import ai_bp
+
 import os
 
 
@@ -22,7 +26,7 @@ def create_app():
     mail.init_app(app)
 
     # Init extensions
-    CORS(app, supports_credentials=True, origins=["https://plan2win.vercel.app"], allow_headers=["Content-Type"])
+    CORS(app, supports_credentials=True, origins=['http://plan2win.vercel.app'], allow_headers=["Content-Type"])
     mongo.init_app(app)
     login_manager.init_app(app)
     bcrypt.init_app(app)
@@ -30,6 +34,12 @@ def create_app():
     # Register blueprints
     app.register_blueprint(study_bp)
     app.register_blueprint(auth_bp)
+    app.register_blueprint(profile_bp)
+    app.register_blueprint(search_bp)
+    app.register_blueprint(ai_bp)
+
+
+
     return app
 
 # Moved this out of top-level to avoid circular import

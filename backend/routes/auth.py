@@ -10,12 +10,12 @@ from flask_mail import Message
 auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
 
 @auth_bp.route('/register', methods=['POST', 'OPTIONS'])
-@cross_origin(origins='https://plan2win.vercel.app', supports_credentials=True)
+@cross_origin(origins='http://plan2win.vercel.app', supports_credentials=True)
 def register():
     # Handle preflight OPTIONS request
     if request.method == 'OPTIONS':
         response = make_response('', 200)
-        response.headers['Access-Control-Allow-Origin'] = 'https://plan2win.vercel.app'
+        response.headers['Access-Control-Allow-Origin'] = 'http://plan2win.vercel.app'
         response.headers['Access-Control-Allow-Credentials'] = 'true'
         response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
         response.headers['Access-Control-Allow-Methods'] = 'POST, OPTIONS'
@@ -27,6 +27,10 @@ def register():
     existing = mongo.db.users.find_one({'email': data['email']})
     if existing:
         return jsonify({'error': 'User already exists'}), 400
+    
+    existing_username = mongo.db.users.find_one({'username': data['username']})
+    if existing_username:
+        return jsonify({'error': 'Username already exists'}), 400
 
     hashed = hash_password(data['password'])
     result = mongo.db.users.insert_one({
@@ -66,14 +70,14 @@ def logout():
     return jsonify({'message': 'Logout successful'})
 
 @auth_bp.route('/check', methods=['GET'])
-@cross_origin(origins='https://plan2win.vercel.app', supports_credentials=True)
+@cross_origin(origins='http://plan2win.vercel.app', supports_credentials=True)
 def check_session():
     response = make_response(jsonify({"loggedIn": current_user.is_authenticated}))
     return response
 
 @auth_bp.route('/delete-account', methods=['POST'])
 @login_required
-@cross_origin(origins='https://plan2win.vercel.app', supports_credentials=True)
+@cross_origin(origins='http://plan2win.vercel.app', supports_credentials=True)
 def delete_account():
     user_id = current_user.id
     mongo.db.users.delete_one({"_id": ObjectId(user_id)})

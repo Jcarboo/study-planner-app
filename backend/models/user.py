@@ -7,6 +7,7 @@ class User(UserMixin):
         self.id = str(user_doc["_id"])
         self.username = user_doc["username"]
         self.email = user_doc["email"]
+        self.courses = user_doc.get("courses", [])
 
     @staticmethod
     def get(user_id):
