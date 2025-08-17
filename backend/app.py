@@ -1,5 +1,5 @@
 # app.py
-from flask import Flask
+from flask import Flask, jsonify
 from flask_cors import CORS
 from config import Config
 from extensions import mongo, login_manager, bcrypt, mail
@@ -56,6 +56,11 @@ def create_app():
     app.register_blueprint(profile_bp)
     app.register_blueprint(search_bp)
     app.register_blueprint(ai_bp)
+
+    @app.get("/health")
+    def health():
+        return jsonify({"ok": True, })
+    
     return app
 
 from models.user import User
