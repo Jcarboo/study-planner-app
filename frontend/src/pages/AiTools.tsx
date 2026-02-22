@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 
 type FR = { type:'fr'; question:string; rubric:string; idealAnswer:string };
@@ -17,26 +17,21 @@ const NOTES_LIMIT = 5;
 export default function AiTools() {
   const [tab, setTab] = useState<'summarize'|'explain'|'quiz'>('summarize');
 
-  // Saved notes
   const [notes, setNotes] = useState<NoteMeta[]>([]);
   const [selectedNoteId, setSelectedNoteId] = useState<string | null>(null);
   const [loadingNotes, setLoadingNotes] = useState(true);
 
-  // Upload
   const [uploading, setUploading] = useState(false);
   const [uploadText, setUploadText] = useState('');
   const [uploadTitle, setUploadTitle] = useState('');
 
-  // Summarize
   const [summary, setSummary] = useState<any>(null);
   const [sumLoading, setSumLoading] = useState(false);
 
-  // Explain
   const [topic, setTopic] = useState('');
   const [explain, setExplain] = useState<any>(null);
   const [expLoading, setExpLoading] = useState(false);
 
-  // Quiz
   const [numMCQ, setNumMCQ] = useState(4);
   const [numFR, setNumFR] = useState(2);
   const [difficulty, setDifficulty] = useState('medium');
@@ -49,14 +44,13 @@ export default function AiTools() {
 
   const canUploadMore = notes.length < NOTES_LIMIT;
 
-  const loadNotes = async () => {
+  const loadNotes = useCallback(async () => {
     setLoadingNotes(true);
     try {
       const res = await axios.get<NoteMeta[]>('https://study-planner-app-123478359200.us-east4.run.app/ai/notes', { withCredentials: true });
       setNotes(res.data);
-      // Preserve selection if still exists, else select latest if any
       if (res.data.length) {
-        const stillThere = res.data.some(n => n._id === selectedNoteId);
+        const stillThere = selectedNoteId ? res.data.some(n => n._id === selectedNoteId) : false;
         setSelectedNoteId(stillThere ? selectedNoteId : res.data[0]._id);
       } else {
         setSelectedNoteId(null);
@@ -66,9 +60,9 @@ export default function AiTools() {
     } finally {
       setLoadingNotes(false);
     }
-  };
+  }, [selectedNoteId]);
 
-  useEffect(() => { loadNotes(); /* eslint-disable-next-line */ }, []);
+  useEffect(() => { loadNotes(); }, [loadNotes]);
 
   const handleUploadFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files?.[0]) return;
@@ -163,7 +157,7 @@ export default function AiTools() {
   };
 
   const genQuiz = async () => {
-    if (isGeneratingQuiz) return; // guard against double clicks
+    if (isGeneratingQuiz) return;
     setIsGeneratingQuiz(true);
     setQuiz(null);
     setGradeResult(null);
@@ -201,7 +195,6 @@ export default function AiTools() {
 
   return (
     <div className="relative w-full min-h-screen text-white font-body pt-20 px-6">
-      {/* Background */}
       <img
         src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/12cbe8a4-f55c-4b40-85bb-d8e1405e7b84/dez5d9x-79cb89e0-a551-4731-82cd-399bbc6ea0c5.gif?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzEyY2JlOGE0LWY1NWMtNGI0MC04NWJiLWQ4ZTE0MDVlN2I4NFwvZGV6NWQ5eC03OWNiODllMC1hNTUxLTQ3MzEtODJjZC0zOTliYmM2ZWEwYzUuZ2lmIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.F3BLEOSDxCVgRlKV6n0ureGuMiFeHbMtV5bN-SGVQRc"
         alt="bg"
@@ -212,7 +205,6 @@ export default function AiTools() {
         ✨ AI Study Tools
       </h1>
 
-      {/* Tabs */}
       <div className="flex gap-3 mb-6">
         {(['summarize','explain','quiz'] as const).map(t => (
           <button
@@ -233,9 +225,7 @@ export default function AiTools() {
         ))}
       </div>
 
-      {/* Notes selector + uploader */}
       <div className="grid lg:grid-cols-3 gap-6 mb-6">
-        {/* Saved Notes */}
         <div className="bg-[#140032]/70 border border-pink-500/40 rounded-2xl p-6 shadow-[0_0_24px_rgba(255,20,147,0.25)] backdrop-blur">
           <div className="flex items-center justify-between mb-3">
             <h2 className="text-xl font-heading text-pink-300">Saved Notes</h2>
@@ -274,7 +264,6 @@ export default function AiTools() {
           )}
         </div>
 
-        {/* Upload block */}
         <div className="lg:col-span-2 bg-[#140032]/70 border border-indigo-500/40 rounded-2xl p-6 shadow-[0_0_24px_rgba(99,102,241,0.3)] backdrop-blur">
           <h2 className="text-xl font-heading text-indigo-300 mb-3">Upload or paste notes</h2>
           {!canUploadMore && (
@@ -322,7 +311,6 @@ export default function AiTools() {
         </div>
       </div>
 
-      {/* Panels */}
       {tab === 'summarize' && (
         <div className="bg-[#0b0018]/70 border border-indigo-500/40 rounded-2xl p-6 shadow-[0_0_24px_rgba(99,102,241,0.3)] backdrop-blur">
           <button onClick={runSummarize} disabled={sumLoading || isGeneratingQuiz}
@@ -508,11 +496,9 @@ export default function AiTools() {
         </div>
       )}
 
-      {/* Full-screen neon generating overlay */}
       {isGeneratingQuiz && (
         <div className="fixed inset-0 z-[60] grid place-items-center bg-black/60 backdrop-blur-md">
           <div className="relative w-72 h-72 grid place-items-center">
-            {/* inner glow pulse */}
             <div
               className="w-40 h-40 rounded-full"
               style={{
@@ -530,7 +516,6 @@ export default function AiTools() {
                 Cooking questions, options & answers…
               </p>
             </div>
-            {/* shimmer bar */}
             <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-56 h-2 rounded-full bg-white/10 overflow-hidden">
               <span
                 className="absolute inset-y-0 w-24 rounded-full"
@@ -542,7 +527,6 @@ export default function AiTools() {
               />
             </div>
           </div>
-          {/* keyframes inline (tailwind-free) */}
           <style>
             {`
               @keyframes pulseGlow { 0%,100%{transform:scale(.95)} 50%{transform:scale(1.05)} }
