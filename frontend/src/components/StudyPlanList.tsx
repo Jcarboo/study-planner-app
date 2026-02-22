@@ -31,7 +31,7 @@ export default function StudyPlanList({ refresh }: StudyPlanListProps) {
 
   const fetchPlans = async () => {
     try {
-      const res = await axios.get('https://study-planner-backend-xjed.onrender.com/study/all', {
+      const res = await axios.get('https://study-planner-app-123478359200.us-east4.run.app/study/all', {
         withCredentials: true,
       });
       setPlans(res.data);
@@ -50,7 +50,7 @@ export default function StudyPlanList({ refresh }: StudyPlanListProps) {
     );
     if (!confirm) return;
     try {
-      await axios.delete(`https://study-planner-backend-xjed.onrender.com/study/${planId}`, {
+      await axios.delete(`https://study-planner-app-123478359200.us-east4.run.app/study/${planId}`, {
         withCredentials: true,
       });
       fetchPlans();
@@ -62,7 +62,7 @@ export default function StudyPlanList({ refresh }: StudyPlanListProps) {
   const deleteTask = async (planId: string, taskName: string) => {
     try {
       await axios.post(
-        `https://study-planner-backend-xjed.onrender.com/study/${planId}/delete-task`,
+        `https://study-planner-app-123478359200.us-east4.run.app/study/${planId}/delete-task`,
         { task_name: taskName },
         { withCredentials: true }
       );
@@ -75,7 +75,7 @@ export default function StudyPlanList({ refresh }: StudyPlanListProps) {
   const addTask = async (planId: string) => {
     try {
       await axios.post(
-        `https://study-planner-backend-xjed.onrender.com/study/${planId}/add-task`,
+        `https://study-planner-app-123478359200.us-east4.run.app/study/${planId}/add-task`,
         { task_name: newTasks[planId] || '' },
         { withCredentials: true }
       );
@@ -93,7 +93,7 @@ export default function StudyPlanList({ refresh }: StudyPlanListProps) {
   ) => {
     try {
       await axios.post(
-        `https://study-planner-backend-xjed.onrender.com/study/${planId}/toggle-task`,
+        `https://study-planner-app-123478359200.us-east4.run.app/study/${planId}/toggle-task`,
         { task_name: taskName, done: !currentDone },
         { withCredentials: true }
       );
@@ -106,7 +106,7 @@ export default function StudyPlanList({ refresh }: StudyPlanListProps) {
   const toggleFeatured = async (planId: string, current: boolean | undefined) => {
     try {
       await axios.post(
-        `https://study-planner-backend-xjed.onrender.com/study/${planId}/feature`,
+        `https://study-planner-app-123478359200.us-east4.run.app/study/${planId}/feature`,
         { featured: !current },
         { withCredentials: true }
       );

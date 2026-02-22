@@ -18,7 +18,7 @@ export default function StudyPlanForm({ onPlanCreated }: StudyPlanFormProps) {
     e.preventDefault();
     try {
       const taskObjs = tasks.map((t) => ({ name: t, done: false }));
-      await axios.post('https://study-planner-backend-xjed.onrender.com/study/create', {
+      await axios.post('https://study-planner-app-123478359200.us-east4.run.app/study/create', {
         title,
         subject,
         deadline,
@@ -40,7 +40,7 @@ export default function StudyPlanForm({ onPlanCreated }: StudyPlanFormProps) {
     }
     try {
       setAiLoading(true);
-      const res = await axios.post('https://study-planner-backend-xjed.onrender.com/ai/breakdown', {
+      const res = await axios.post('https://study-planner-app-123478359200.us-east4.run.app/ai/breakdown', {
         title,
         subject,
         notes: aiNotes,

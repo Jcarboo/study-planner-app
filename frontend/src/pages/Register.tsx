@@ -17,7 +17,7 @@ export default function Register({ onLogin }: RegisterProps) {
     e.preventDefault();
     try {
       const res = await axios.post(
-        'https://study-planner-backend-xjed.onrender.com/auth/register',
+        'https://study-planner-app-123478359200.us-east4.run.app/auth/register',
         { email, username, password },
         { withCredentials: true }
       );

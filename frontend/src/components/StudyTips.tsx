@@ -16,7 +16,7 @@ export default function StudyTips() {
     try {
       setLoading(true);
       setErr(null);
-      const res = await axios.get<TipsPayload>('https://study-planner-backend-xjed.onrender.com/ai/tips', { withCredentials: true });
+      const res = await axios.get<TipsPayload>('https://study-planner-app-123478359200.us-east4.run.app/ai/tips', { withCredentials: true });
       setTips(res.data);
     } catch (e) {
       console.error(e);

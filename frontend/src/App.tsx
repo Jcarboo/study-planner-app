@@ -19,7 +19,7 @@ function App() {
 
   const checkSession = async () => {
     try {
-      const res = await axios.get('https://study-planner-backend-xjed.onrender.com/auth/check', { withCredentials: true });
+      const res = await axios.get('https://study-planner-app-123478359200.us-east4.run.app/auth/check', { withCredentials: true });
       setIsLoggedIn(res.data.loggedIn);
     } catch {
       setIsLoggedIn(false);
