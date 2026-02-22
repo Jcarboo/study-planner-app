@@ -5,6 +5,12 @@ from config import Config
 from extensions import mongo, login_manager, bcrypt, mail
 import os
 
+from models.user import User
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.get(user_id)
+
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
@@ -62,9 +68,3 @@ def create_app():
         return jsonify({"ok": True, })
     
     return app
-
-from models.user import User
-
-@login_manager.user_loader
-def load_user(user_id):
-    return User.get(user_id)
